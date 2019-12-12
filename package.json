@@ -1,34 +1,29 @@
 {
-  "name": "tfjs_demo",
-  "version": "0.1.0",
-  "private": true,
-  "author": {
-    "name": "Gant Laborde",
-    "url": "http://gantlaborde.com"
-  },
-  "description": "Awesome TFJS Demo with RPS",
-  "dependencies": {
-    "@tensorflow/tfjs": "^1.0.4",
-    "@tensorflow/tfjs-vis": "^1.0.3",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8",
-    "react-webcam": "^1.1.1",
-    "seedrandom": "~2.4.3"
-  },
+  "name": "tensorflow-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dragan1810/tensorflow-js.git"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dragan1810/tensorflow-js/issues"
+  },
+  "homepage": "https://github.com/Dragan1810/tensorflow-js#readme",
+  "devDependencies": {
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
+    "@tensorflow-models/knn-classifier": "^1.2.2",
+    "@tensorflow-models/mobilenet": "^2.0.4",
+    "@tensorflow/tfjs": "^1.4.0",
+    "@tensorflow/tfjs-vis": "^1.3.0"
+  }
 }
