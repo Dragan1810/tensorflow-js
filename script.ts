@@ -3,6 +3,7 @@ import * as tf from "@tensorflow/tfjs";
 import * as knnClassifier from "@tensorflow-models/knn-classifier";
 
 const webcamElement = document.getElementById("webcam") as HTMLVideoElement;
+const classifier = knnClassifier.create();
 
 let net: MobileNet;
 
@@ -13,22 +14,48 @@ async function app() {
   net = await mobilenetLoad();
   console.log("Successfully loaded model");
 
-  // Create an object from Tensorflow.js data API which could capture image
-  // from the web camera as Tensor.
   const webcam = await tf.data.webcam(webcamElement);
-  while (true) {
-    const img = await webcam.capture();
-    const result = await net.classify(img);
 
-    document.getElementById("console").innerText = `
-        prediction: ${result[0].className}\n
-        probability: ${result[0].probability}
-      `;
+  // Reads an image from the webcam and associates it with a specific class
+  // index.
+  const addExample = async (classId: string | number) => {
+    console.log(classId);
+    // Capture an image from the web camera.
+    const img = await webcam.capture();
+    const activation = net.infer(img, true);
+
+    classifier.addExample(activation, classId);
+
     // Dispose the tensor to release the memory.
     img.dispose();
+  };
 
-    // Give some breathing room by waiting for the next animation frame to
-    // fire.
+  document
+    .getElementById("class-a")
+    .addEventListener("click", () => addExample(0));
+  document
+    .getElementById("class-b")
+    .addEventListener("click", () => addExample(1));
+  document
+    .getElementById("class-c")
+    .addEventListener("click", () => addExample(2));
+
+  while (true) {
+    if (classifier.getNumClasses() > 0) {
+      const img = await webcam.capture();
+      const activation = net.infer(img, true);
+      // Get the most likely class and confidences from the classifier module.
+      const result = await classifier.predictClass(activation);
+
+      const classes = ["A", "B", "C"];
+      document.getElementById("console").innerText = `
+          prediction: ${classes[result.label]}\n
+          probability: ${result.confidences[result.label]}
+        `;
+
+      img.dispose();
+    }
+
     await tf.nextFrame();
   }
 }
