@@ -47,11 +47,35 @@ async function app() {
       // Get the most likely class and confidences from the classifier module.
       const result = await classifier.predictClass(activation);
 
-      const classes = ["A", "B", "C"];
+      const classes = ["Kamen", "Papir", "Makaze"];
+      // num of trained exxamples
+      console.log("NUM", classifier.getClassExampleCount());
       document.getElementById("console").innerText = `
           prediction: ${classes[result.label]}\n
           probability: ${result.confidences[result.label]}
         `;
+
+      //  setInterval(() => {
+      const gameDiv = document.getElementById("game");
+
+      if (classes[result.label] === "Kamen") {
+        gameDiv.innerHTML = `
+          <img src='./images/kamen.jpg' alt='kamen' width='224' height='224' />
+          `;
+      }
+
+      if (classes[result.label] === "Papir") {
+        gameDiv.innerHTML = `
+          <img src='./images/papir.png' alt='papir' width='224' height='224' />
+          `;
+      }
+
+      if (classes[result.label] === "Makaze") {
+        gameDiv.innerHTML = `
+          <img src='./images/makaze.jpg' alt='makaze' width='224' height='224' />
+          `;
+      }
+      //  }, 100);
 
       img.dispose();
     }
